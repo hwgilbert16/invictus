@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
@@ -12,6 +13,12 @@ import { join } from 'path';
       rootPath: join(__dirname, '..', 'client'),
       serveRoot: '/'
     }),
+    TypeOrmModule.forRoot({
+      type: 'sqlite',
+      database: 'db',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true
+    })
   ],
   controllers: [AppController],
   providers: [AppService],
